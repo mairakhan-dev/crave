@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ============================================================
-                   CSS (compacted but fully functional)
+                   CSS (Full with enhanced background animations)
                    ============================================================ */
         :root {
             --color-bg: #0e0d0b;
-            --color-bg-card: #191715;
+            --color-bg-card: rgba(25, 23, 21, 0.85);
             --color-orange: #f97316;
             --color-orange-dark: #ea580c;
             --color-white: #ffffff;
@@ -30,6 +30,7 @@
             --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --font: 'Inter', -apple-system, sans-serif;
         }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -45,7 +46,60 @@
             line-height: 1.5;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            position: relative;
         }
+
+        /* Enhanced Animated Background Gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(220, 38, 38, 0.06) 0%, transparent 35%),
+                radial-gradient(circle at 40% 80%, rgba(254, 243, 226, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 60% 20%, rgba(249, 115, 22, 0.05) 0%, transparent 25%),
+                var(--color-bg);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Canvas Particle Layer */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            display: block;
+        }
+
+        /* Content Layer */
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+
         img {
             max-width: 100%;
             display: block;
@@ -138,15 +192,6 @@
             background: var(--color-orange-dark);
             transform: scale(1.08);
         }
-        @media (max-width:640px) {
-            .back-to-top {
-                bottom: 80px;
-                right: 16px;
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-        }
 
         /* buttons */
         .btn-primary {
@@ -175,7 +220,8 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
             color: var(--color-white);
             font-weight: 600;
             font-size: 1rem;
@@ -188,6 +234,7 @@
             border-color: var(--color-orange);
             color: var(--color-orange);
             transform: translateY(-2px);
+            background: rgba(249, 115, 22, 0.1);
         }
         .btn-small {
             padding: 10px 22px;
@@ -233,6 +280,7 @@
             pointer-events: auto;
             animation: slideInToast 0.45s cubic-bezier(0.22, 1, 0.36, 1);
             border-left: 4px solid var(--color-orange);
+            backdrop-filter: blur(8px);
         }
         .toast.exit {
             animation: slideOutToast 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -292,8 +340,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(14, 13, 11, 0.92);
-            backdrop-filter: blur(12px);
+            background: rgba(14, 13, 11, 0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(44, 40, 36, 0.6);
             transition: var(--transition);
         }
@@ -638,10 +686,11 @@
             border: 2px solid var(--color-border);
             box-shadow: 0 30px 80px rgba(249, 115, 22, 0.12);
             transition: var(--transition);
+            transform: scale(1);
         }
         .hero-image .img-wrapper:hover {
             box-shadow: 0 40px 100px rgba(249, 115, 22, 0.2);
-            transform: scale(1.01);
+            transform: scale(1.02);
         }
         .hero-image .img-wrapper img {
             width: 100%;
@@ -670,7 +719,7 @@
         }
         .float-badge {
             position: absolute;
-            background: rgba(25, 23, 21, 0.92);
+            background: rgba(25, 23, 21, 0.85);
             backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: 100px;
@@ -715,7 +764,7 @@
                 transform: translateY(0px) rotate(0deg);
             }
             50% {
-                transform: translateY(-14px) rotate(1deg);
+                transform: translateY(-14px) rotate(2deg);
             }
         }
         @media (max-width:992px) {
@@ -784,6 +833,8 @@
         .category-bar {
             padding: 20px 0 32px;
             border-bottom: 1px solid var(--color-border);
+            background: rgba(14, 13, 11, 0.6);
+            backdrop-filter: blur(4px);
         }
         .category-bar .scroll {
             display: flex;
@@ -818,6 +869,7 @@
             align-items: center;
             gap: 8px;
             position: relative;
+            backdrop-filter: blur(4px);
         }
         .cat-item::before {
             content: '';
@@ -859,9 +911,14 @@
         }
         .section {
             padding: 60px 0;
+            position: relative;
+            z-index: 2;
         }
         .section.bg-alt {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.6);
+            backdrop-filter: blur(4px);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
         }
 
         /* product grid */
@@ -872,6 +929,7 @@
         }
         .product-card {
             background: var(--color-bg-card);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             overflow: hidden;
@@ -1031,7 +1089,8 @@
 
         /* combo */
         .combo-banner {
-            background: linear-gradient(135deg, #1f1a16, #2d241e);
+            background: rgba(31, 26, 22, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 48px 40px;
@@ -1186,7 +1245,8 @@
             color: var(--color-gray);
             border: 1px solid var(--color-border);
             transition: var(--transition);
-            background: transparent;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
             position: relative;
         }
         .menu-tabs button::before {
@@ -1218,7 +1278,8 @@
             min-width: 200px;
         }
         .menu-search input {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(4px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-input);
             padding: 10px 16px 10px 42px;
@@ -1276,6 +1337,7 @@
         }
         .modal-box {
             background: var(--color-bg-card);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             max-width: 720px;
@@ -1483,7 +1545,8 @@
             width: 100%;
             max-width: 440px;
             z-index: 1600;
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.95);
+            backdrop-filter: blur(16px);
             border-left: 1px solid var(--color-border);
             box-shadow: -8px 0 40px rgba(0, 0, 0, 0.6);
             transform: translateX(100%);
@@ -1697,7 +1760,8 @@
             display: flex;
         }
         .checkout-box {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.95);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             max-width: 880px;
@@ -1929,7 +1993,8 @@
             display: flex;
         }
         .confirm-box {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.95);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             max-width: 480px;
@@ -1994,7 +2059,8 @@
             padding: 40px 0 20px;
         }
         .whatsapp-card {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 32px 28px;
@@ -2071,7 +2137,8 @@
             padding: 40px 0;
         }
         .tracking-card {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 32px 28px;
@@ -2185,7 +2252,8 @@
             gap: 24px;
         }
         .feature-item {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 28px 20px;
@@ -2223,7 +2291,8 @@
             gap: 20px;
         }
         .review-card {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 24px 20px;
@@ -2327,7 +2396,8 @@
             gap: 20px;
         }
         .location-card {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 24px 20px;
@@ -2415,7 +2485,8 @@
 
         /* newsletter */
         .newsletter-box {
-            background: var(--color-bg-card);
+            background: rgba(25, 23, 21, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-card);
             padding: 40px 32px;
@@ -2490,6 +2561,8 @@
             border-top: 1px solid var(--color-border);
             padding: 48px 0 24px;
             margin-top: 20px;
+            background: rgba(14, 13, 11, 0.8);
+            backdrop-filter: blur(8px);
         }
         .footer-grid {
             display: grid;
@@ -2647,6 +2720,9 @@
 </head>
 <body>
 
+    <!-- Canvas Background (Particle System) -->
+    <canvas id="bg-canvas"></canvas>
+
     <!-- scroll progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -2664,434 +2740,570 @@
         <span class="badge">🔥</span>
     </a>
 
-    <!-- navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <a href="#" class="nav-logo">CRAVE<span>.</span></a>
-            <ul class="nav-links">
-                <li><a href="#hero" class="active">Home</a></li>
-                <li><a href="#bestsellers">Menu</a></li>
-                <li><a href="#combos">Combos</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#locations">Locations</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button aria-label="Search"><i class="fas fa-search"></i></button>
-                <button aria-label="Account"><i class="fas fa-user"></i></button>
-                <button class="cart-btn" id="cartToggle" aria-label="Cart">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="cart-count" id="cartCount">0</span>
-                </button>
-                <div class="hamburger" id="hamburger" aria-label="Toggle menu">
-                    <span></span><span></span><span></span>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Main Content Layer -->
+    <div class="content-layer">
 
-    <!-- mobile nav -->
-    <div class="mobile-nav" id="mobileNav">
-        <a href="#hero">Home</a>
-        <a href="#bestsellers">Menu</a>
-        <a href="#combos">Combos</a>
-        <a href="#about">About</a>
-        <a href="#locations">Locations</a>
-        <a href="#" id="mobileCartLink"><i class="fas fa-shopping-bag"></i> Cart</a>
-    </div>
-
-    <!-- hero -->
-    <section class="hero" id="hero">
-        <div class="container">
-            <div class="hero-content">
-                <span class="label">🔥 THE CRAVE EXPERIENCE</span>
-                <h1>BIG CRAVINGS.<br /><span class="highlight">BIGGER BITES.</span></h1>
-                <p>Loaded burgers, crispy chicken, golden fries and ice-cold drinks — made fresh and delivered straight to you.</p>
-                <div class="hero-actions">
-                    <a href="#bestsellers" class="btn-primary">ORDER NOW <i class="fas fa-arrow-right"></i></a>
-                    <a href="#fullmenu" class="btn-secondary">VIEW MENU</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&h=800&fit=crop&crop=center&auto=format" alt="CRAVE burger and fries" loading="eager" />
-                    <div class="shimmer"></div>
-                </div>
-                <div class="float-badge b1"><i class="fas fa-leaf"></i> 100% Fresh</div>
-                <div class="float-badge b2"><i class="fas fa-clock"></i> Made to Order</div>
-                <div class="float-badge b3"><i class="fas fa-bolt"></i> Fast Delivery</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- category -->
-    <div class="category-bar">
-        <div class="container">
-            <div class="scroll" id="categoryScroll">
-                <button class="cat-item active" data-cat="all">🍔 All</button>
-                <button class="cat-item" data-cat="burgers">🍔 Burgers</button>
-                <button class="cat-item" data-cat="chicken">🍗 Chicken</button>
-                <button class="cat-item" data-cat="fries">🍟 Fries</button>
-                <button class="cat-item" data-cat="wraps">🌯 Wraps</button>
-                <button class="cat-item" data-cat="drinks">🥤 Drinks</button>
-                <button class="cat-item" data-cat="desserts">🍦 Desserts</button>
-                <button class="cat-item" data-cat="combos">🔥 Combos</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- promo -->
-    <div class="container">
-        <div class="promo-strip fade-up">
-            <span>🚚 FREE DELIVERY ON ORDERS OVER RS. 2,000</span>
-            <span class="timer" id="promoTimer">01:42:18</span>
-        </div>
-    </div>
-
-    <!-- bestsellers -->
-    <section class="section" id="bestsellers">
-        <div class="container">
-            <div class="section-header fade-up">
-                <h2>WHAT EVERYONE'S <span style="color:var(--color-orange);">CRAVING</span></h2>
-                <p>Our most-ordered favorites.</p>
-            </div>
-            <div class="product-grid" id="bestsellerGrid"></div>
-        </div>
-    </section>
-
-    <!-- combo -->
-    <section class="section" id="combos" style="padding-top:0;">
-        <div class="container">
-            <div class="combo-banner fade-up">
-                <div class="left">
-                    <div class="label">🔥 LIMITED TIME</div>
-                    <h2>THE ULTIMATE CRAVE COMBO</h2>
-                    <p>Burger + crispy fries + ice-cold drink.</p>
-                    <div class="price-wrap">
-                        <span class="current">Rs. 1,299</span>
-                        <span class="old">Rs. 1,499</span>
-                        <span class="save">SAVE Rs. 200</span>
-                    </div>
-                    <button class="btn-primary btn-small" onclick="addComboToCart()">GET THE COMBO <i class="fas fa-arrow-right"></i></button>
-                </div>
-                <div class="right">
-                    <div class="mini-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=120&h=120&fit=crop&crop=center&auto=format" alt="burger" loading="lazy" /></div>
-                    <span class="plus">+</span>
-                    <div class="mini-img"><img src="https://images.unsplash.com/photo-1630384060421-cb3d1d8f2c5c?w=120&h=120&fit=crop&crop=center&auto=format" alt="fries" loading="lazy" /></div>
-                    <span class="plus">+</span>
-                    <div class="mini-img"><img src="https://images.unsplash.com/photo-1546173159-3154f4ce31d3?w=120&h=120&fit=crop&crop=center&auto=format" alt="drink" loading="lazy" /></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- full menu -->
-    <section class="section bg-alt" id="fullmenu">
-        <div class="container">
-            <div class="section-header fade-up">
-                <h2>THE <span style="color:var(--color-orange);">FULL MENU</span></h2>
-                <p>Every craving, covered.</p>
-            </div>
-            <div class="menu-toolbar fade-up">
-                <div class="menu-tabs" id="menuTabs">
-                    <button class="active" data-filter="all">All</button>
-                    <button data-filter="burgers">Burgers</button>
-                    <button data-filter="chicken">Chicken</button>
-                    <button data-filter="fries">Fries</button>
-                    <button data-filter="wraps">Wraps</button>
-                    <button data-filter="drinks">Drinks</button>
-                    <button data-filter="desserts">Desserts</button>
-                    <button data-filter="combos">Combos</button>
-                </div>
-                <div class="menu-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="menuSearch" placeholder="Search your craving..." />
-                </div>
-            </div>
-            <div class="product-grid" id="menuGrid"></div>
-        </div>
-    </section>
-
-    <!-- whatsapp -->
-    <section class="whatsapp-section" id="about">
-        <div class="container">
-            <div class="whatsapp-card fade-up">
-                <div class="left">
-                    <i class="fab fa-whatsapp"></i>
-                    <div>
-                        <h3>Order on WhatsApp</h3>
-                        <p>Skip the app. Order directly via WhatsApp.</p>
+        <!-- navbar -->
+        <nav class="navbar" id="navbar">
+            <div class="container">
+                <a href="#" class="nav-logo">CRAVE<span>.</span></a>
+                <ul class="nav-links">
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#bestsellers">Menu</a></li>
+                    <li><a href="#combos">Combos</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#locations">Locations</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button aria-label="Account"><i class="fas fa-user"></i></button>
+                    <button class="cart-btn" id="cartToggle" aria-label="Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+                        <span></span><span></span><span></span>
                     </div>
                 </div>
-                <button class="btn-wa" id="whatsappBtn"><i class="fab fa-whatsapp"></i> ORDER ON WHATSAPP</button>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <!-- tracking -->
-    <section class="tracking-section" id="tracking">
-        <div class="container">
-            <div class="tracking-card fade-up">
-                <div class="track-header">
-                    <span class="order-id">Order #CRV-2847</span>
-                    <span class="eta">⏱ 25–35 min</span>
-                </div>
-                <div class="tracking-steps" id="trackingSteps">
-                    <div class="ts-step done"><div class="dot">✓</div><span class="label">Confirmed</span></div>
-                    <div class="ts-step active"><div class="dot">🍔</div><span class="label">Preparing</span></div>
-                    <div class="ts-step"><div class="dot">🛵</div><span class="label">Out for Delivery</span></div>
-                    <div class="ts-step"><div class="dot">✓</div><span class="label">Delivered</span></div>
-                </div>
-                <div style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--color-gray);">
-                    <i class="fas fa-sync-alt" style="margin-right:6px;animation:spin 3s linear infinite;"></i> Live tracking (demo)
-                </div>
-            </div>
+        <!-- mobile nav -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#hero">Home</a>
+            <a href="#bestsellers">Menu</a>
+            <a href="#combos">Combos</a>
+            <a href="#about">About</a>
+            <a href="#locations">Locations</a>
+            <a href="#" id="mobileCartLink"><i class="fas fa-shopping-bag"></i> Cart</a>
         </div>
-    </section>
 
-    <!-- why crave -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="section-header text-center fade-up">
-                <h2>WHY PEOPLE <span style="color:var(--color-orange);">CRAVE US</span></h2>
-                <p>Real flavor. Real fast.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item fade-up delay-1"><i class="fas fa-seedling"></i><h4>Fresh Ingredients</h4><p>Real ingredients. Real flavor.</p></div>
-                <div class="feature-item fade-up delay-2"><i class="fas fa-fire"></i><h4>Made Fresh</h4><p>Every order is prepared fresh.</p></div>
-                <div class="feature-item fade-up delay-3"><i class="fas fa-rocket"></i><h4>Fast Delivery</h4><p>Hot food at your door.</p></div>
-                <div class="feature-item fade-up delay-4"><i class="fas fa-utensils"></i><h4>Big Portions</h4><p>Because small cravings don't exist.</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- reviews -->
-    <section class="section bg-alt">
-        <div class="container">
-            <div class="section-header text-center fade-up">
-                <h2>REAL <span style="color:var(--color-orange);">REVIEWS</span></h2>
-                <p>What our fans are saying.</p>
-            </div>
-            <div class="reviews-grid">
-                <div class="review-card fade-up delay-1">
-                    <div class="stars">★★★★★</div>
-                    <blockquote>"That burger was INSANE. Easily one of the best I've had."</blockquote>
-                    <span class="author">— Ayesha M.</span>
-                </div>
-                <div class="review-card fade-up delay-2">
-                    <div class="stars">★★★★★</div>
-                    <blockquote>"Ordered at 8:10 and it arrived before 8:40. And the fries were still crispy."</blockquote>
-                    <span class="author">— Hamza R.</span>
-                </div>
-                <div class="review-card fade-up delay-3">
-                    <div class="stars">★★★★★</div>
-                    <blockquote>"The Fire Chicken is officially my new obsession."</blockquote>
-                    <span class="author">— Sara K.</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- gallery -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header text-center fade-up">
-                <h2>FOLLOW <span style="color:var(--color-orange);">@CRAVEEATS</span></h2>
-                <p>Food worth sharing.</p>
-            </div>
-            <div class="gallery-grid">
-                <div class="g-item fade-up delay-1"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=400&fit=crop&crop=center&auto=format" alt="burger" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
-                <div class="g-item fade-up delay-2"><img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=400&fit=crop&crop=center&auto=format" alt="chicken" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
-                <div class="g-item fade-up delay-3"><img src="https://images.unsplash.com/photo-1630384060421-cb3d1d8f2c5c?w=400&h=400&fit=crop&crop=center&auto=format" alt="fries" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
-                <div class="g-item fade-up delay-4"><img src="https://images.unsplash.com/photo-1546173159-3154f4ce31d3?w=400&h=400&fit=crop&crop=center&auto=format" alt="milkshake" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
-            </div>
-            <div class="gallery-cta">
-                <p>Follow us for daily food inspiration.</p>
-                <button class="btn-primary btn-small"><i class="fab fa-instagram"></i> FOLLOW US</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- locations -->
-    <section class="section bg-alt" id="locations">
-        <div class="container">
-            <div class="section-header text-center fade-up">
-                <h2>FIND YOUR <span style="color:var(--color-orange);">CRAVE</span></h2>
-                <p>We're everywhere you need us.</p>
-            </div>
-            <div class="locations-grid">
-                <div class="location-card fade-up delay-1">
-                    <h4>Gulberg</h4>
-                    <div class="sub">Lahore</div>
-                    <p>24 Main Blvd, Gulberg III<br />12 PM – 2 AM<br />+92 300 1234567</p>
-                    <a href="#" class="dir-btn">GET DIRECTIONS <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="location-card fade-up delay-2">
-                    <h4>DHA</h4>
-                    <div class="sub">Lahore</div>
-                    <p>Phase 5, DHA Lahore<br />12 PM – 2 AM<br />+92 300 1234568</p>
-                    <a href="#" class="dir-btn">GET DIRECTIONS <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="location-card fade-up delay-3">
-                    <h4>Johar Town</h4>
-                    <div class="sub">Lahore</div>
-                    <p>Main Road, Johar Town<br />12 PM – 2 AM<br />+92 300 1234569</p>
-                    <a href="#" class="dir-btn">GET DIRECTIONS <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- newsletter -->
-    <section class="section">
-        <div class="container">
-            <div class="newsletter-box fade-up">
-                <h2>GET THE <span style="color:var(--color-orange);">GOOD STUFF</span></h2>
-                <p>New drops, exclusive combos and deals. Straight to your inbox.</p>
-                <form class="nl-form" id="newsletterForm">
-                    <input type="email" placeholder="Enter your email" required />
-                    <button type="submit" class="btn-primary">JOIN CRAVE</button>
-                </form>
-                <div class="nl-success" id="nlSuccess">🎉 You're in. Welcome to the CRAVE crew.</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="brand">
-                    <a href="#" class="nav-logo" style="font-size:1.6rem;">CRAVE<span>.</span></a>
-                    <p>Big cravings. Bigger bites.</p>
-                </div>
-                <div class="col">
-                    <h5>Quick Links</h5>
-                    <a href="#hero">Home</a>
-                    <a href="#bestsellers">Menu</a>
-                    <a href="#combos">Combos</a>
-                    <a href="#about">About</a>
-                    <a href="#locations">Locations</a>
-                </div>
-                <div class="col">
-                    <h5>Support</h5>
-                    <a href="#">Contact</a>
-                    <a href="#">Delivery</a>
-                    <a href="#">FAQs</a>
-                </div>
-                <div class="col">
-                    <h5>Connect</h5>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
+        <!-- hero -->
+        <section class="hero" id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="label">🔥 THE CRAVE EXPERIENCE</span>
+                    <h1>BIG CRAVINGS.<br /><span class="highlight">BIGGER BITES.</span></h1>
+                    <p>Loaded burgers, crispy chicken, golden fries and ice-cold drinks — made fresh and delivered straight to you.</p>
+                    <div class="hero-actions">
+                        <a href="#bestsellers" class="btn-primary">ORDER NOW <i class="fas fa-arrow-right"></i></a>
+                        <a href="#fullmenu" class="btn-secondary">VIEW MENU</a>
                     </div>
-                    <p style="margin-top:12px;color:var(--color-gray);font-size:0.85rem;">hello@crave.pk<br />+92 300 1234567</p>
-                    <p style="color:var(--color-gray);font-size:0.8rem;margin-top:4px;">12 PM – 2 AM</p>
+                </div>
+                <div class="hero-image">
+                    <div class="img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&h=800&fit=crop&crop=center&auto=format" alt="CRAVE burger and fries" loading="eager" />
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="float-badge b1"><i class="fas fa-leaf"></i> 100% Fresh</div>
+                    <div class="float-badge b2"><i class="fas fa-clock"></i> Made to Order</div>
+                    <div class="float-badge b3"><i class="fas fa-bolt"></i> Fast Delivery</div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <span>© 2026 CRAVE. All rights reserved.</span>
-                <span>Made with <i class="fas fa-heart" style="color:var(--color-red);"></i> in Lahore</span>
-            </div>
-        </div>
-    </footer>
+        </section>
 
-    <!-- modals -->
-    <div class="modal-overlay" id="quickViewModal">
-        <div class="modal-box">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <img class="modal-img" id="modalImg" src="" alt="product" />
-            <h2 class="modal-title" id="modalTitle">Product</h2>
-            <div class="modal-rating" id="modalRating">★★★★★ <span style="color:var(--color-gray);font-weight:400;">(4.8)</span></div>
-            <p class="modal-desc" id="modalDesc">Description</p>
-            <div class="modal-price" id="modalPrice">Rs. 0</div>
-            <div class="modal-options" id="modalOptions"></div>
-            <div class="modal-qty">
-                <button id="qtyDec">−</button>
-                <span id="qtyDisplay">1</span>
-                <button id="qtyInc">+</button>
-            </div>
-            <div class="modal-special">
-                <textarea id="modalInstructions" placeholder="Special instructions (e.g. no onions, extra sauce)"></textarea>
-            </div>
-            <button class="modal-add-btn" id="modalAddBtn">ADD TO CART</button>
-        </div>
-    </div>
-
-    <div class="cart-overlay" id="cartOverlay"></div>
-    <div class="cart-slide" id="cartSlide">
-        <div class="cart-header">
-            <h2>YOUR CRAVE CART</h2>
-            <span class="close-cart" id="closeCart">&times;</span>
-        </div>
-        <div class="cart-items" id="cartItems"></div>
-        <div class="cart-footer" id="cartFooter"></div>
-    </div>
-
-    <div class="checkout-overlay" id="checkoutOverlay">
-        <div class="checkout-box">
-            <span class="close-checkout" id="closeCheckout">&times;</span>
-            <div class="checkout-steps" id="checkoutSteps">
-                <div class="step active"><span class="num">1</span> Cart <span class="line"></span></div>
-                <div class="step"><span class="num">2</span> Details <span class="line"></span></div>
-                <div class="step"><span class="num">3</span> Payment <span class="line"></span></div>
-                <div class="step"><span class="num">4</span> Confirmation</div>
-            </div>
-            <div id="checkoutContent">
-                <div id="checkoutStep1">
-                    <h3>Review Your Order</h3>
-                    <div id="checkoutCartSummary" style="margin:12px 0 20px;"></div>
-                    <button class="btn-primary" id="checkoutNext1" style="width:100%;justify-content:center;">Next →</button>
+        <!-- category -->
+        <div class="category-bar">
+            <div class="container">
+                <div class="scroll" id="categoryScroll">
+                    <button class="cat-item active" data-cat="all">🍔 All</button>
+                    <button class="cat-item" data-cat="burgers">🍔 Burgers</button>
+                    <button class="cat-item" data-cat="chicken">🍗 Chicken</button>
+                    <button class="cat-item" data-cat="fries">🍟 Fries</button>
+                    <button class="cat-item" data-cat="wraps">🌯 Wraps</button>
+                    <button class="cat-item" data-cat="drinks">🥤 Drinks</button>
+                    <button class="cat-item" data-cat="desserts">🍦 Desserts</button>
+                    <button class="cat-item" data-cat="combos">🔥 Combos</button>
                 </div>
-                <div id="checkoutStep2" style="display:none;">
-                    <div class="checkout-grid">
-                        <div class="col">
-                            <h3>Customer Information</h3>
-                            <div class="field"><label>Full name</label><input type="text" id="cfName" placeholder="Ali Khan" /></div>
-                            <div class="field"><label>Phone number</label><input type="tel" id="cfPhone" placeholder="03XX-XXXXXXX" /></div>
-                            <div class="field"><label>Email</label><input type="email" id="cfEmail" placeholder="ali@example.com" /></div>
-                            <h3 style="margin-top:16px;">Delivery Information</h3>
-                            <div class="field"><label>Address</label><input type="text" id="cfAddress" placeholder="House #, Street, Area" /></div>
-                            <div class="field"><label>Area</label><input type="text" id="cfArea" placeholder="Gulberg, Lahore" /></div>
-                            <div class="field"><label>Delivery instructions</label><textarea id="cfInstructions" placeholder="Gate code, landmark, etc."></textarea></div>
+            </div>
+        </div>
+
+        <!-- promo -->
+        <div class="container">
+            <div class="promo-strip fade-up">
+                <span>🚚 FREE DELIVERY ON ORDERS OVER RS. 2,000</span>
+                <span class="timer" id="promoTimer">01:42:18</span>
+            </div>
+        </div>
+
+        <!-- bestsellers -->
+        <section class="section" id="bestsellers">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>WHAT EVERYONE'S <span style="color:var(--color-orange);">CRAVING</span></h2>
+                    <p>Our most-ordered favorites.</p>
+                </div>
+                <div class="product-grid" id="bestsellerGrid"></div>
+            </div>
+        </section>
+
+        <!-- combo -->
+        <section class="section" id="combos" style="padding-top:0;">
+            <div class="container">
+                <div class="combo-banner fade-up">
+                    <div class="left">
+                        <div class="label">🔥 LIMITED TIME</div>
+                        <h2>THE ULTIMATE CRAVE COMBO</h2>
+                        <p>Burger + crispy fries + ice-cold drink.</p>
+                        <div class="price-wrap">
+                            <span class="current">Rs. 1,299</span>
+                            <span class="old">Rs. 1,499</span>
+                            <span class="save">SAVE Rs. 200</span>
                         </div>
-                        <div class="col">
-                            <h3>Order Summary</h3>
-                            <div class="checkout-summary" id="checkoutSummary"></div>
-                            <div class="checkout-payment">
-                                <h3>Payment</h3>
-                                <div class="pay-options">
-                                    <label><input type="radio" name="payment" value="cod" checked /><span>Cash on Delivery</span></label>
-                                    <label><input type="radio" name="payment" value="card" /><span>Card</span></label>
-                                    <label><input type="radio" name="payment" value="jazzcash" /><span>JazzCash</span></label>
-                                    <label><input type="radio" name="payment" value="easypaisa" /><span>Easypaisa</span></label>
-                                </div>
+                        <button class="btn-primary btn-small" onclick="addComboToCart()">GET THE COMBO <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="right">
+                        <div class="mini-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=120&h=120&fit=crop&crop=center&auto=format" alt="burger" loading="lazy" /></div>
+                        <span class="plus">+</span>
+                        <div class="mini-img"><img src="https://images.unsplash.com/photo-1630384060421-cb3d1d8f2c5c?w=120&h=120&fit=crop&crop=center&auto=format" alt="fries" loading="lazy" /></div>
+                        <span class="plus">+</span>
+                        <div class="mini-img"><img src="https://images.unsplash.com/photo-1546173159-3154f4ce31d3?w=120&h=120&fit=crop&crop=center&auto=format" alt="drink" loading="lazy" /></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- full menu -->
+        <section class="section bg-alt" id="fullmenu">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>THE <span style="color:var(--color-orange);">FULL MENU</span></h2>
+                    <p>Every craving, covered.</p>
+                </div>
+                <div class="menu-toolbar fade-up">
+                    <div class="menu-tabs" id="menuTabs">
+                        <button class="active" data-filter="all">All</button>
+                        <button data-filter="burgers">Burgers</button>
+                        <button data-filter="chicken">Chicken</button>
+                        <button data-filter="fries">Fries</button>
+                        <button data-filter="wraps">Wraps</button>
+                        <button data-filter="drinks">Drinks</button>
+                        <button data-filter="desserts">Desserts</button>
+                        <button data-filter="combos">Combos</button>
+                    </div>
+                    <div class="menu-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="menuSearch" placeholder="Search your craving..." />
+                    </div>
+                </div>
+                <div class="product-grid" id="menuGrid"></div>
+            </div>
+        </section>
+
+        <!-- whatsapp -->
+        <section class="whatsapp-section" id="about">
+            <div class="container">
+                <div class="whatsapp-card fade-up">
+                    <div class="left">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <h3>Order on WhatsApp</h3>
+                            <p>Skip the app. Order directly via WhatsApp.</p>
+                        </div>
+                    </div>
+                    <button class="btn-wa" id="whatsappBtn"><i class="fab fa-whatsapp"></i> ORDER ON WHATSAPP</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- tracking -->
+        <section class="tracking-section" id="tracking">
+            <div class="container">
+                <div class="tracking-card fade-up">
+                    <div class="track-header">
+                        <span class="order-id">Order #CRV-2847</span>
+                        <span class="eta">⏱ 25–35 min</span>
+                    </div>
+                    <div class="tracking-steps" id="trackingSteps">
+                        <div class="ts-step done"><div class="dot">✓</div><span class="label">Confirmed</span></div>
+                        <div class="ts-step active"><div class="dot">🍔</div><span class="label">Preparing</span></div>
+                        <div class="ts-step"><div class="dot">🛵</div><span class="label">Out for Delivery</span></div>
+                        <div class="ts-step"><div class="dot">✓</div><span class="label">Delivered</span></div>
+                    </div>
+                    <div style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--color-gray);">
+                        <i class="fas fa-sync-alt" style="margin-right:6px;animation:spin 3s linear infinite;"></i> Live tracking (demo)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- why crave -->
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-header text-center fade-up">
+                    <h2>WHY PEOPLE <span style="color:var(--color-orange);">CRAVE US</span></h2>
+                    <p>Real flavor. Real fast.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item fade-up delay-1"><i class="fas fa-seedling"></i><h4>Fresh Ingredients</h4><p>Real ingredients. Real flavor.</p></div>
+                    <div class="feature-item fade-up delay-2"><i class="fas fa-fire"></i><h4>Made Fresh</h4><p>Every order is prepared fresh.</p></div>
+                    <div class="feature-item fade-up delay-3"><i class="fas fa-rocket"></i><h4>Fast Delivery</h4><p>Hot food at your door.</p></div>
+                    <div class="feature-item fade-up delay-4"><i class="fas fa-utensils"></i><h4>Big Portions</h4><p>Because small cravings don't exist.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- reviews -->
+        <section class="section bg-alt">
+            <div class="container">
+                <div class="section-header text-center fade-up">
+                    <h2>REAL <span style="color:var(--color-orange);">REVIEWS</span></h2>
+                    <p>What our fans are saying.</p>
+                </div>
+                <div class="reviews-grid">
+                    <div class="review-card fade-up delay-1">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>"That burger was INSANE. Easily one of the best I've had."</blockquote>
+                        <span class="author">— Ayesha M.</span>
+                    </div>
+                    <div class="review-card fade-up delay-2">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>"Ordered at 8:10 and it arrived before 8:40. And the fries were still crispy."</blockquote>
+                        <span class="author">— Hamza R.</span>
+                    </div>
+                    <div class="review-card fade-up delay-3">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>"The Fire Chicken is officially my new obsession."</blockquote>
+                        <span class="author">— Sara K.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- gallery -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header text-center fade-up">
+                    <h2>FOLLOW <span style="color:var(--color-orange);">@CRAVEEATS</span></h2>
+                    <p>Food worth sharing.</p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="g-item fade-up delay-1"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=400&fit=crop&crop=center&auto=format" alt="burger" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
+                    <div class="g-item fade-up delay-2"><img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=400&fit=crop&crop=center&auto=format" alt="chicken" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
+                    <div class="g-item fade-up delay-3"><img src="https://images.unsplash.com/photo-1630384060421-cb3d1d8f2c5c?w=400&h=400&fit=crop&crop=center&auto=format" alt="fries" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
+                    <div class="g-item fade-up delay-4"><img src="https://images.unsplash.com/photo-1546173159-3154f4ce31d3?w=400&h=400&fit=crop&crop=center&auto=format" alt="milkshake" loading="lazy" /><div class="g-overlay"><i class="fas fa-camera"></i></div></div>
+                </div>
+                <div class="gallery-cta">
+                    <p>Follow us for daily food inspiration.</p>
+                    <button class="btn-primary btn-small"><i class="fab fa-instagram"></i> FOLLOW US</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- locations -->
+        <section class="section bg-alt" id="locations">
+            <div class="container">
+                <div class="section-header text-center fade-up">
+                    <h2>FIND YOUR <span style="color:var(--color-orange);">CRAVE</span></h2>
+                    <p>We're everywhere you need us.</p>
+                </div>
+                <div class="locations-grid">
+                    <div class="location-card fade-up delay-1">
+                        <h4>Gulberg</h4>
+                        <div class="sub">Lahore</div>
+                        <p>24 Main Blvd, Gulberg III<br />12 PM – 2 AM<br />+92 300 1234567</p>
+                        <a href="#" class="dir-btn">GET DIRECTIONS <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="location-card fade-up delay-2">
+                        <h4>DHA</h4>
+                        <div class="sub">Lahore</div>
+                        <p>Phase 5, DHA Lahore<br />12 PM – 2 AM<br />+92 300 1234568</p>
+                        <a href="#" class="dir-btn">GET DIRECTIONS <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="location-card fade-up delay-3">
+                        <h4>Johar Town</h4>
+                        <div class="sub">Lahore</div>
+                        <p>Main Road, Johar Town<br />12 PM – 2 AM<br />+92 300 1234569</p>
+                        <a href="#" class="dir-btn">GET DIRECTIONS <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- newsletter -->
+        <section class="section">
+            <div class="container">
+                <div class="newsletter-box fade-up">
+                    <h2>GET THE <span style="color:var(--color-orange);">GOOD STUFF</span></h2>
+                    <p>New drops, exclusive combos and deals. Straight to your inbox.</p>
+                    <form class="nl-form" id="newsletterForm">
+                        <input type="email" placeholder="Enter your email" required />
+                        <button type="submit" class="btn-primary">JOIN CRAVE</button>
+                    </form>
+                    <div class="nl-success" id="nlSuccess">🎉 You're in. Welcome to the CRAVE crew.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="brand">
+                        <a href="#" class="nav-logo" style="font-size:1.6rem;">CRAVE<span>.</span></a>
+                        <p>Big cravings. Bigger bites.</p>
+                    </div>
+                    <div class="col">
+                        <h5>Quick Links</h5>
+                        <a href="#hero">Home</a>
+                        <a href="#bestsellers">Menu</a>
+                        <a href="#combos">Combos</a>
+                        <a href="#about">About</a>
+                        <a href="#locations">Locations</a>
+                    </div>
+                    <div class="col">
+                        <h5>Support</h5>
+                        <a href="#">Contact</a>
+                        <a href="#">Delivery</a>
+                        <a href="#">FAQs</a>
+                    </div>
+                    <div class="col">
+                        <h5>Connect</h5>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-tiktok"></i></a>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                        </div>
+                        <p style="margin-top:12px;color:var(--color-gray);font-size:0.85rem;">hello@crave.pk<br />+92 300 1234567</p>
+                        <p style="color:var(--color-gray);font-size:0.8rem;margin-top:4px;">12 PM – 2 AM</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>© 2026 CRAVE. All rights reserved.</span>
+                    <span>Made with <i class="fas fa-heart" style="color:var(--color-red);"></i> in Lahore</span>
+                </div>
+            </div>
+        </footer>
+
+        <!-- modals -->
+        <div class="modal-overlay" id="quickViewModal">
+            <div class="modal-box">
+                <span class="close-modal" id="closeModal">&times;</span>
+                <img class="modal-img" id="modalImg" src="" alt="product" />
+                <h2 class="modal-title" id="modalTitle">Product</h2>
+                <div class="modal-rating" id="modalRating">★★★★★ <span style="color:var(--color-gray);font-weight:400;">(4.8)</span></div>
+                <p class="modal-desc" id="modalDesc">Description</p>
+                <div class="modal-price" id="modalPrice">Rs. 0</div>
+                <div class="modal-options" id="modalOptions"></div>
+                <div class="modal-qty">
+                    <button id="qtyDec">−</button>
+                    <span id="qtyDisplay">1</span>
+                    <button id="qtyInc">+</button>
+                </div>
+                <div class="modal-special">
+                    <textarea id="modalInstructions" placeholder="Special instructions (e.g. no onions, extra sauce)"></textarea>
+                </div>
+                <button class="modal-add-btn" id="modalAddBtn">ADD TO CART</button>
+            </div>
+        </div>
+
+        <div class="cart-overlay" id="cartOverlay"></div>
+        <div class="cart-slide" id="cartSlide">
+            <div class="cart-header">
+                <h2>YOUR CRAVE CART</h2>
+                <span class="close-cart" id="closeCart">&times;</span>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer" id="cartFooter"></div>
+        </div>
+
+        <div class="checkout-overlay" id="checkoutOverlay">
+            <div class="checkout-box">
+                <span class="close-checkout" id="closeCheckout">&times;</span>
+                <div class="checkout-steps" id="checkoutSteps">
+                    <div class="step active"><span class="num">1</span> Cart <span class="line"></span></div>
+                    <div class="step"><span class="num">2</span> Details <span class="line"></span></div>
+                    <div class="step"><span class="num">3</span> Payment <span class="line"></span></div>
+                    <div class="step"><span class="num">4</span> Confirmation</div>
+                </div>
+                <div id="checkoutContent">
+                    <div id="checkoutStep1">
+                        <h3>Review Your Order</h3>
+                        <div id="checkoutCartSummary" style="margin:12px 0 20px;"></div>
+                        <button class="btn-primary" id="checkoutNext1" style="width:100%;justify-content:center;">Next →</button>
+                    </div>
+                    <div id="checkoutStep2" style="display:none;">
+                        <div class="checkout-grid">
+                            <div class="col">
+                                <h3>Customer Information</h3>
+                                <div class="field"><label>Full name</label><input type="text" id="cfName" placeholder="Ali Khan" /></div>
+                                <div class="field"><label>Phone number</label><input type="tel" id="cfPhone" placeholder="03XX-XXXXXXX" /></div>
+                                <div class="field"><label>Email</label><input type="email" id="cfEmail" placeholder="ali@example.com" /></div>
+                                <h3 style="margin-top:16px;">Delivery Information</h3>
+                                <div class="field"><label>Address</label><input type="text" id="cfAddress" placeholder="House #, Street, Area" /></div>
+                                <div class="field"><label>Area</label><input type="text" id="cfArea" placeholder="Gulberg, Lahore" /></div>
+                                <div class="field"><label>Delivery instructions</label><textarea id="cfInstructions" placeholder="Gate code, landmark, etc."></textarea></div>
                             </div>
-                            <button class="checkout-place" id="placeOrderBtn">PLACE ORDER</button>
+                            <div class="col">
+                                <h3>Order Summary</h3>
+                                <div class="checkout-summary" id="checkoutSummary"></div>
+                                <div class="checkout-payment">
+                                    <h3>Payment</h3>
+                                    <div class="pay-options">
+                                        <label><input type="radio" name="payment" value="cod" checked /><span>Cash on Delivery</span></label>
+                                        <label><input type="radio" name="payment" value="card" /><span>Card</span></label>
+                                        <label><input type="radio" name="payment" value="jazzcash" /><span>JazzCash</span></label>
+                                        <label><input type="radio" name="payment" value="easypaisa" /><span>Easypaisa</span></label>
+                                    </div>
+                                </div>
+                                <button class="checkout-place" id="placeOrderBtn">PLACE ORDER</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="confirm-overlay" id="confirmOverlay">
-        <div class="confirm-box">
-            <div class="icon">✅</div>
-            <h2>ORDER CONFIRMED!</h2>
-            <p>Thanks for choosing CRAVE. Your food is being prepared.</p>
-            <div class="order-num">#CRV-2847</div>
-            <div class="eta">⏱ Estimated delivery: 25–35 minutes</div>
-            <div class="actions">
-                <button class="btn-primary" onclick="closeConfirm()">TRACK ORDER</button>
-                <button class="btn-secondary" onclick="closeConfirm();window.scrollTo({top:0,behavior:'smooth'})">BACK TO HOME</button>
+        <div class="confirm-overlay" id="confirmOverlay">
+            <div class="confirm-box">
+                <div class="icon">✅</div>
+                <h2>ORDER CONFIRMED!</h2>
+                <p>Thanks for choosing CRAVE. Your food is being prepared.</p>
+                <div class="order-num">#CRV-2847</div>
+                <div class="eta">⏱ Estimated delivery: 25–35 minutes</div>
+                <div class="actions">
+                    <button class="btn-primary" onclick="closeConfirm()">TRACK ORDER</button>
+                    <button class="btn-secondary" onclick="closeConfirm();window.scrollTo({top:0,behavior:'smooth'})">BACK TO HOME</button>
+                </div>
             </div>
         </div>
-    </div>
+
+    </div> <!-- end content-layer -->
 
     <script>
         // ============================================================
-        // PRODUCTS – 26 unique items with distinct images
+        // ENHANCED CANVAS PARTICLE BACKGROUND
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const PARTICLE_COUNT = 70;
+            const CONNECTION_DIST = 150;
+            const MOUSE_RADIUS = 200;
+
+            // Brand colors
+            const colors = ['#f97316', '#fb923c', '#dc2626', '#fef3e2', '#ea580c'];
+
+            // Mouse tracking
+            let mouse = { x: null, y: null };
+
+            function init() {
+                resize();
+                createParticles();
+                animate();
+                window.addEventListener('resize', resize);
+                window.addEventListener('mousemove', onMouseMove);
+                window.addEventListener('mouseleave', onMouseLeave);
+            }
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }
+
+            function createParticles() {
+                particles = [];
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 3 + 2,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: (Math.random() - 0.5) * 0.4,
+                    });
+                }
+            }
+
+            function onMouseMove(e) {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            }
+
+            function onMouseLeave() {
+                mouse.x = null;
+                mouse.y = null;
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Update and draw particles
+                for (let p of particles) {
+                    // Move
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    // Bounce off edges
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                    // Mouse interaction (repulsion)
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = p.x - mouse.x;
+                        const dy = p.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < MOUSE_RADIUS) {
+                            const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+                            const angle = Math.atan2(dy, dx);
+                            p.vx += Math.cos(angle) * force * 0.2;
+                            p.vy += Math.sin(angle) * force * 0.2;
+                        }
+                    }
+
+                    // Limit speed
+                    const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                    if (speed > 0.8) {
+                        p.vx = (p.vx / speed) * 0.8;
+                        p.vy = (p.vy / speed) * 0.8;
+                    }
+
+                    // Draw particle (glow effect)
+                    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 2);
+                    gradient.addColorStop(0, p.color);
+                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius * 2, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius * 0.6, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+                    ctx.fill();
+                }
+
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < CONNECTION_DIST) {
+                            const opacity = 1 - (dist / CONNECTION_DIST);
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(249, 115, 22, ${opacity * 0.25})`;
+                            ctx.lineWidth = 1.2;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            // Start the particle system
+            init();
+        })();
+
+        // ============================================================
+        // PRODUCTS DATA (26 unique items)
         // ============================================================
         const PRODUCTS = [{
             id: 'p1',
@@ -4159,7 +4371,7 @@
 
         console.log('🍔 CRAVE — Big cravings. Bigger bites.');
         console.log('🛒 Cart:', cart);
-        console.log('📸 26 unique items loaded with fallback support.');
+        console.log('📸 26 unique items with animated particle background.');
     </script>
 </body>
 </html>
