@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ============================================================
-                   CSS (Full with enhanced background animations)
+                   CSS (full, with enhanced background)
                    ============================================================ */
         :root {
             --color-bg: #0e0d0b;
@@ -50,7 +50,7 @@
             position: relative;
         }
 
-        /* Enhanced Animated Background Gradient */
+        /* Animated Background Gradient (warm food tones) */
         body::before {
             content: '';
             position: fixed;
@@ -60,16 +60,15 @@
             bottom: 0;
             z-index: 0;
             background:
-                radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(220, 38, 38, 0.06) 0%, transparent 35%),
-                radial-gradient(circle at 40% 80%, rgba(254, 243, 226, 0.03) 0%, transparent 30%),
-                radial-gradient(circle at 60% 20%, rgba(249, 115, 22, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.10) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(220, 38, 38, 0.07) 0%, transparent 35%),
+                radial-gradient(circle at 40% 80%, rgba(254, 243, 226, 0.04) 0%, transparent 30%),
+                radial-gradient(circle at 60% 20%, rgba(249, 115, 22, 0.06) 0%, transparent 25%),
                 var(--color-bg);
             background-size: 200% 200%;
-            animation: gradientShift 15s ease-in-out infinite alternate;
+            animation: gradientShift 18s ease-in-out infinite alternate;
             pointer-events: none;
         }
-
         @keyframes gradientShift {
             0% {
                 background-position: 0% 50%;
@@ -92,6 +91,69 @@
             z-index: 1;
             pointer-events: none;
             display: block;
+        }
+
+        /* Floating Food Emoji Overlay */
+        .food-float {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            font-size: 2.2rem;
+            opacity: 0.06;
+            animation: floatEmoji 20s linear infinite;
+            user-select: none;
+        }
+        @keyframes floatEmoji {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.8);
+                opacity: 0.03;
+            }
+            10% {
+                opacity: 0.08;
+            }
+            90% {
+                opacity: 0.08;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1.2);
+                opacity: 0.03;
+            }
+        }
+        .food-float:nth-child(1) {
+            left: 5%;
+            animation-duration: 22s;
+            animation-delay: 0s;
+            font-size: 2.8rem;
+        }
+        .food-float:nth-child(2) {
+            left: 20%;
+            animation-duration: 26s;
+            animation-delay: 4s;
+            font-size: 1.8rem;
+        }
+        .food-float:nth-child(3) {
+            left: 40%;
+            animation-duration: 24s;
+            animation-delay: 8s;
+            font-size: 3.2rem;
+        }
+        .food-float:nth-child(4) {
+            left: 60%;
+            animation-duration: 28s;
+            animation-delay: 2s;
+            font-size: 2.0rem;
+        }
+        .food-float:nth-child(5) {
+            left: 80%;
+            animation-duration: 20s;
+            animation-delay: 6s;
+            font-size: 2.6rem;
+        }
+        .food-float:nth-child(6) {
+            left: 92%;
+            animation-duration: 30s;
+            animation-delay: 10s;
+            font-size: 1.6rem;
         }
 
         /* Content Layer */
@@ -2723,6 +2785,14 @@
     <!-- Canvas Background (Particle System) -->
     <canvas id="bg-canvas"></canvas>
 
+    <!-- Floating Food Emojis -->
+    <div class="food-float" style="left:5%; animation-duration:22s; animation-delay:0s; font-size:2.8rem;">🍔</div>
+    <div class="food-float" style="left:20%; animation-duration:26s; animation-delay:4s; font-size:1.8rem;">🍟</div>
+    <div class="food-float" style="left:40%; animation-duration:24s; animation-delay:8s; font-size:3.2rem;">🍗</div>
+    <div class="food-float" style="left:60%; animation-duration:28s; animation-delay:2s; font-size:2.0rem;">🌯</div>
+    <div class="food-float" style="left:80%; animation-duration:20s; animation-delay:6s; font-size:2.6rem;">🍦</div>
+    <div class="food-float" style="left:92%; animation-duration:30s; animation-delay:10s; font-size:1.6rem;">🥤</div>
+
     <!-- scroll progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -3172,7 +3242,7 @@
 
     <script>
         // ============================================================
-        // ENHANCED CANVAS PARTICLE BACKGROUND
+        // ENHANCED CANVAS PARTICLE BACKGROUND (Warm food colors)
         // ============================================================
         (function() {
             const canvas = document.getElementById('bg-canvas');
@@ -3183,10 +3253,9 @@
             const CONNECTION_DIST = 150;
             const MOUSE_RADIUS = 200;
 
-            // Brand colors
-            const colors = ['#f97316', '#fb923c', '#dc2626', '#fef3e2', '#ea580c'];
+            // Warm food-inspired colors
+            const colors = ['#f97316', '#fb923c', '#ea580c', '#fef3e2', '#dc2626', '#fbbf24', '#22c55e'];
 
-            // Mouse tracking
             let mouse = { x: null, y: null };
 
             function init() {
@@ -3232,17 +3301,13 @@
             function animate() {
                 ctx.clearRect(0, 0, width, height);
 
-                // Update and draw particles
                 for (let p of particles) {
-                    // Move
                     p.x += p.vx;
                     p.y += p.vy;
 
-                    // Bounce off edges
                     if (p.x < 0 || p.x > width) p.vx *= -1;
                     if (p.y < 0 || p.y > height) p.vy *= -1;
 
-                    // Mouse interaction (repulsion)
                     if (mouse.x !== null && mouse.y !== null) {
                         const dx = p.x - mouse.x;
                         const dy = p.y - mouse.y;
@@ -3255,14 +3320,12 @@
                         }
                     }
 
-                    // Limit speed
                     const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
                     if (speed > 0.8) {
                         p.vx = (p.vx / speed) * 0.8;
                         p.vy = (p.vy / speed) * 0.8;
                     }
 
-                    // Draw particle (glow effect)
                     const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 2);
                     gradient.addColorStop(0, p.color);
                     gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
@@ -3277,7 +3340,6 @@
                     ctx.fill();
                 }
 
-                // Draw connections
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
@@ -3298,12 +3360,11 @@
                 requestAnimationFrame(animate);
             }
 
-            // Start the particle system
             init();
         })();
 
         // ============================================================
-        // PRODUCTS DATA (26 unique items)
+        // PRODUCTS DATA (26 unique items – Mango Smoothie fixed)
         // ============================================================
         const PRODUCTS = [{
             id: 'p1',
@@ -3434,8 +3495,8 @@
             price: 449,
             category: 'drinks',
             rating: 4.4,
-            image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400&h=400&fit=crop&crop=center&auto=format',
-            emoji: '🥤',
+            image: 'https://images.unsplash.com/photo-1623065422902-30a2d299d4c1?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🥭',
             bestseller: false,
             extras: [{ label: 'Extra honey', price: 40 }],
             sizes: ['Regular', 'Large']
@@ -4371,7 +4432,7 @@
 
         console.log('🍔 CRAVE — Big cravings. Bigger bites.');
         console.log('🛒 Cart:', cart);
-        console.log('📸 26 unique items with animated particle background.');
+        console.log('📸 All images are food-related (Mango Smoothie fixed).');
     </script>
 </body>
 </html>
