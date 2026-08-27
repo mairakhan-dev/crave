@@ -4,24 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRAVE — Big cravings. Bigger bites.</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ============================================================
-                   CSS CUSTOM PROPERTIES & RESET
+                   CSS (same as before – compacted for brevity)
                    ============================================================ */
         :root {
             --color-bg: #0e0d0b;
             --color-bg-card: #191715;
-            --color-bg-input: #26221e;
             --color-orange: #f97316;
-            --color-orange-light: #fb923c;
             --color-orange-dark: #ea580c;
-            --color-cream: #fef3e2;
             --color-white: #ffffff;
             --color-red: #dc2626;
             --color-gray: #a3a09b;
@@ -33,19 +28,15 @@
             --radius-btn: 100px;
             --radius-input: 12px;
             --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font: 'Inter', -apple-system, sans-serif;
         }
-
-        *,
-        *::before,
-        *::after {
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
         html {
             scroll-behavior: smooth;
-            -webkit-tap-highlight-color: transparent;
         }
         body {
             font-family: var(--font);
@@ -97,30 +88,26 @@
             margin: 0 auto;
             padding: 0 24px;
         }
-        @media (max-width: 640px) {
+        @media (max-width:640px) {
             .container {
                 padding: 0 16px;
             }
         }
 
-        /* ============================================================
-                   SCROLL PROGRESS BAR
-                   ============================================================ */
+        /* scroll progress */
         .scroll-progress {
             position: fixed;
             top: 0;
             left: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--color-orange), var(--color-orange-light));
+            background: linear-gradient(90deg, var(--color-orange), #fb923c);
             z-index: 9999;
             width: 0%;
             transition: width 0.1s ease;
             box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
         }
 
-        /* ============================================================
-                   BUTTONS with ripple
-                   ============================================================ */
+        /* buttons */
         .btn-primary {
             display: inline-flex;
             align-items: center;
@@ -142,9 +129,6 @@
             border-color: var(--color-orange-dark);
             transform: scale(1.02);
             box-shadow: 0 8px 30px rgba(249, 115, 22, 0.35);
-        }
-        .btn-primary:active {
-            transform: scale(0.97);
         }
         .btn-secondary {
             display: inline-flex;
@@ -168,7 +152,6 @@
             padding: 10px 22px;
             font-size: 0.9rem;
         }
-
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -184,9 +167,7 @@
             }
         }
 
-        /* ============================================================
-                   TOAST
-                   ============================================================ */
+        /* toast */
         .toast-container {
             position: fixed;
             bottom: 24px;
@@ -265,16 +246,13 @@
             }
         }
 
-        /* ============================================================
-                   NAVIGATION
-                   ============================================================ */
+        /* navbar */
         .navbar {
             position: sticky;
             top: 0;
             z-index: 1000;
             background: rgba(14, 13, 11, 0.92);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(44, 40, 36, 0.6);
             transition: var(--transition);
         }
@@ -348,16 +326,7 @@
             color: var(--color-white);
             transform: translateY(-1px);
         }
-        .nav-actions .cart-btn {
-            position: relative;
-        }
-        .nav-actions .cart-btn .fa-shopping-bag {
-            transition: var(--transition);
-        }
-        .nav-actions .cart-btn:hover .fa-shopping-bag {
-            transform: scale(1.1);
-        }
-        .nav-actions .cart-count {
+        .cart-btn .cart-count {
             position: absolute;
             top: -6px;
             right: -8px;
@@ -374,10 +343,10 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             transform: scale(0);
         }
-        .nav-actions .cart-count.show {
+        .cart-count.show {
             transform: scale(1);
         }
-        .nav-actions .cart-count.bounce {
+        .cart-count.bounce {
             animation: cartBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes cartBounce {
@@ -394,7 +363,6 @@
                 transform: scale(1);
             }
         }
-
         .hamburger {
             display: none;
             flex-direction: column;
@@ -421,7 +389,6 @@
         .hamburger.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
-
         .mobile-nav {
             display: none;
             position: fixed;
@@ -447,7 +414,6 @@
             transition: var(--transition);
             padding: 8px 0;
             border-bottom: 1px solid var(--color-border);
-            transform-origin: left;
             animation: slideInLink 0.3s ease backwards;
         }
         .mobile-nav a:nth-child(1) {
@@ -492,8 +458,7 @@
                 transform: translateX(0);
             }
         }
-
-        @media (max-width: 992px) {
+        @media (max-width:992px) {
             .nav-links {
                 display: none;
             }
@@ -507,7 +472,7 @@
                 display: flex;
             }
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .nav-actions button {
                 font-size: 1rem;
             }
@@ -519,9 +484,7 @@
             }
         }
 
-        /* ============================================================
-                   HERO with typing & parallax
-                   ============================================================ */
+        /* hero */
         .hero {
             padding: 40px 0 60px;
             position: relative;
@@ -588,7 +551,6 @@
         .hero-content h1 .highlight {
             color: var(--color-orange);
             position: relative;
-            display: inline-block;
         }
         .hero-content h1 .highlight::after {
             content: '';
@@ -618,7 +580,6 @@
             font-size: 1.05rem;
             padding: 16px 40px;
         }
-
         .hero-image {
             position: relative;
             display: flex;
@@ -666,7 +627,6 @@
                 background-position: -200% 0;
             }
         }
-
         .float-badge {
             position: absolute;
             background: rgba(25, 23, 21, 0.92);
@@ -717,8 +677,7 @@
                 transform: translateY(-14px) rotate(1deg);
             }
         }
-
-        @media (max-width: 992px) {
+        @media (max-width:992px) {
             .hero .container {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -748,7 +707,7 @@
                 bottom: 4%;
             }
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .hero {
                 padding: 20px 0 40px;
             }
@@ -780,13 +739,10 @@
             }
         }
 
-        /* ============================================================
-                   CATEGORY BAR
-                   ============================================================ */
+        /* category */
         .category-bar {
             padding: 20px 0 32px;
             border-bottom: 1px solid var(--color-border);
-            position: relative;
         }
         .category-bar .scroll {
             display: flex;
@@ -843,12 +799,10 @@
             transform: scale(1.04);
         }
         .cat-item.active::before {
-            background: linear-gradient(90deg, var(--color-orange), var(--color-orange-light));
+            background: linear-gradient(90deg, var(--color-orange), #fb923c);
         }
 
-        /* ============================================================
-                   SECTION HEADERS
-                   ============================================================ */
+        /* sections */
         .section-header {
             margin-bottom: 32px;
         }
@@ -862,10 +816,6 @@
             font-size: 1.05rem;
             margin-top: 4px;
         }
-
-        /* ============================================================
-                   PRODUCT CARDS
-                   ============================================================ */
         .section {
             padding: 60px 0;
         }
@@ -873,12 +823,12 @@
             background: var(--color-bg-card);
         }
 
+        /* product grid */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 24px;
         }
-
         .product-card {
             background: var(--color-bg-card);
             border: 1px solid var(--color-border);
@@ -917,29 +867,6 @@
             animation: shimmer 5s ease-in-out infinite;
             pointer-events: none;
         }
-        .product-card .badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: var(--color-orange);
-            color: #0e0d0b;
-            font-weight: 700;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            padding: 4px 14px;
-            border-radius: 100px;
-            letter-spacing: 0.5px;
-            animation: pulseBadge 2s ease-in-out infinite;
-        }
-        @keyframes pulseBadge {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.04);
-            }
-        }
         .badge-bestseller {
             position: absolute;
             top: 12px;
@@ -953,6 +880,15 @@
             border-radius: 100px;
             letter-spacing: 0.5px;
             animation: pulseBadge 2.2s ease-in-out infinite;
+        }
+        @keyframes pulseBadge {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.04);
+            }
         }
         .product-card .body {
             padding: 18px 18px 20px;
@@ -1028,8 +964,7 @@
         .product-card .body .add-btn:active {
             transform: scale(0.96);
         }
-
-        @media (max-width: 640px) {
+        @media (max-width:640px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
@@ -1052,16 +987,8 @@
                 font-size: 0.8rem;
             }
         }
-        @media (max-width: 420px) {
-            .product-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-        }
 
-        /* ============================================================
-                   COMBO BANNER
-                   ============================================================ */
+        /* combo */
         .combo-banner {
             background: linear-gradient(135deg, #1f1a16, #2d241e);
             border: 1px solid var(--color-border);
@@ -1182,7 +1109,7 @@
                 opacity: 1;
             }
         }
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .combo-banner {
                 padding: 32px 24px;
                 flex-direction: column;
@@ -1197,9 +1124,7 @@
             }
         }
 
-        /* ============================================================
-                   FULL MENU – TABS & SEARCH
-                   ============================================================ */
+        /* menu toolbar */
         .menu-toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -1244,7 +1169,7 @@
             transform: scale(1.04);
         }
         .menu-tabs button.active::before {
-            background: linear-gradient(90deg, var(--color-orange), var(--color-orange-light));
+            background: linear-gradient(90deg, var(--color-orange), #fb923c);
         }
         .menu-search {
             margin-left: auto;
@@ -1279,7 +1204,7 @@
         .menu-search input:focus~i {
             color: var(--color-orange);
         }
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .menu-toolbar {
                 flex-direction: column;
                 align-items: stretch;
@@ -1292,9 +1217,7 @@
             }
         }
 
-        /* ============================================================
-                   QUICK VIEW MODAL
-                   ============================================================ */
+        /* modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1489,7 +1412,7 @@
         .modal-add-btn:active {
             transform: scale(0.97);
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .modal-box {
                 padding: 20px 16px;
             }
@@ -1498,9 +1421,7 @@
             }
         }
 
-        /* ============================================================
-                   CART SLIDEOUT
-                   ============================================================ */
+        /* cart */
         .cart-overlay {
             position: fixed;
             inset: 0;
@@ -1707,7 +1628,7 @@
             padding: 12px;
             font-size: 0.9rem;
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .cart-slide {
                 max-width: 100%;
                 padding: 16px;
@@ -1718,9 +1639,7 @@
             }
         }
 
-        /* ============================================================
-                   CHECKOUT
-                   ============================================================ */
+        /* checkout */
         .checkout-overlay {
             position: fixed;
             inset: 0;
@@ -1931,7 +1850,7 @@
         .checkout-place:active {
             transform: scale(0.97);
         }
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .checkout-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -1952,9 +1871,7 @@
             }
         }
 
-        /* ============================================================
-                   ORDER CONFIRMATION
-                   ============================================================ */
+        /* confirm */
         .confirm-overlay {
             position: fixed;
             inset: 0;
@@ -2031,9 +1948,7 @@
             padding: 12px;
         }
 
-        /* ============================================================
-                   WHATSAPP ORDERING
-                   ============================================================ */
+        /* whatsapp */
         .whatsapp-section {
             padding: 40px 0 20px;
         }
@@ -2100,7 +2015,7 @@
         .whatsapp-card .btn-wa:active {
             transform: scale(0.96);
         }
-        @media (max-width: 600px) {
+        @media (max-width:600px) {
             .whatsapp-card {
                 flex-direction: column;
                 text-align: center;
@@ -2110,9 +2025,7 @@
             }
         }
 
-        /* ============================================================
-                   ORDER TRACKING
-                   ============================================================ */
+        /* tracking */
         .tracking-section {
             padding: 40px 0;
         }
@@ -2224,9 +2137,7 @@
             color: var(--color-white);
         }
 
-        /* ============================================================
-                   WHY CRAVE
-                   ============================================================ */
+        /* features */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -2264,9 +2175,7 @@
             font-size: 0.9rem;
         }
 
-        /* ============================================================
-                   SOCIAL PROOF
-                   ============================================================ */
+        /* reviews */
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -2301,9 +2210,7 @@
             font-size: 0.85rem;
         }
 
-        /* ============================================================
-                   GALLERY
-                   ============================================================ */
+        /* gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -2360,21 +2267,19 @@
             font-weight: 500;
             margin-bottom: 8px;
         }
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
             }
         }
 
-        /* ============================================================
-                   LOCATIONS
-                   ============================================================ */
+        /* locations */
         .locations-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -2418,12 +2323,10 @@
         }
         .location-card .dir-btn:hover {
             gap: 14px;
-            color: var(--color-orange-light);
+            color: #fb923c;
         }
 
-        /* ============================================================
-                   DELIVERY PROMO
-                   ============================================================ */
+        /* promo */
         .promo-strip {
             background: linear-gradient(135deg, var(--color-orange), var(--color-orange-dark));
             color: #0e0d0b;
@@ -2457,7 +2360,7 @@
                 transform: scale(1.04);
             }
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .promo-strip {
                 font-size: 0.8rem;
                 padding: 12px 16px;
@@ -2469,9 +2372,7 @@
             }
         }
 
-        /* ============================================================
-                   NEWSLETTER
-                   ============================================================ */
+        /* newsletter */
         .newsletter-box {
             background: var(--color-bg-card);
             border: 1px solid var(--color-border);
@@ -2531,7 +2432,7 @@
         .newsletter-box .nl-success.show {
             display: block;
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .newsletter-box {
                 padding: 28px 16px;
             }
@@ -2543,9 +2444,7 @@
             }
         }
 
-        /* ============================================================
-                   FOOTER
-                   ============================================================ */
+        /* footer */
         .footer {
             border-top: 1px solid var(--color-border);
             padding: 48px 0 24px;
@@ -2602,13 +2501,13 @@
             color: var(--color-gray);
             font-size: 0.85rem;
         }
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 24px;
             }
         }
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .footer-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -2619,9 +2518,7 @@
             }
         }
 
-        /* ============================================================
-                   SCROLL REVEAL (fade-up)
-                   ============================================================ */
+        /* fade-up */
         .fade-up {
             opacity: 0;
             transform: translateY(40px);
@@ -2644,49 +2541,14 @@
             transition-delay: 0.4s;
         }
 
-        /* ============================================================
-                   UTILITY
-                   ============================================================ */
         .text-center {
             text-align: center;
-        }
-        .mt-8 {
-            margin-top: 8px;
-        }
-        .mt-16 {
-            margin-top: 16px;
-        }
-        .mt-24 {
-            margin-top: 24px;
-        }
-        .mb-8 {
-            margin-bottom: 8px;
-        }
-        .mb-16 {
-            margin-bottom: 16px;
-        }
-        .flex {
-            display: flex;
-        }
-        .flex-wrap {
-            flex-wrap: wrap;
-        }
-        .items-center {
-            align-items: center;
-        }
-        .justify-center {
-            justify-content: center;
         }
         .product-card.hidden {
             display: none;
         }
-        .wa-preview {
-            display: none;
-        }
 
-        /* ============================================================
-                   FLOATING CTA (mobile)
-                   ============================================================ */
+        /* floating CTA */
         .floating-cta {
             display: none;
             position: fixed;
@@ -2726,12 +2588,12 @@
                 transform: translateX(-50%) translateY(-6px);
             }
         }
-        @media (max-width: 640px) {
+        @media (max-width:640px) {
             .floating-cta {
                 display: flex;
             }
         }
-        @media (max-width: 420px) {
+        @media (max-width:420px) {
             .floating-cta {
                 padding: 12px 20px;
                 font-size: 0.85rem;
@@ -2744,19 +2606,19 @@
 </head>
 <body>
 
-    <!-- SCROLL PROGRESS -->
+    <!-- scroll progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- TOAST CONTAINER -->
+    <!-- toast -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- FLOATING CTA (mobile) -->
+    <!-- floating CTA -->
     <a href="#bestsellers" class="floating-cta" id="floatingCta">
         <i class="fas fa-utensils"></i> ORDER NOW
         <span class="badge">🔥</span>
     </a>
 
-    <!-- NAVIGATION -->
+    <!-- navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="nav-logo">CRAVE<span>.</span></a>
@@ -2781,7 +2643,7 @@
         </div>
     </nav>
 
-    <!-- Mobile nav -->
+    <!-- mobile nav -->
     <div class="mobile-nav" id="mobileNav">
         <a href="#hero">Home</a>
         <a href="#bestsellers">Menu</a>
@@ -2791,7 +2653,7 @@
         <a href="#" id="mobileCartLink"><i class="fas fa-shopping-bag"></i> Cart</a>
     </div>
 
-    <!-- HERO -->
+    <!-- hero -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-content">
@@ -2815,7 +2677,7 @@
         </div>
     </section>
 
-    <!-- QUICK CATEGORY BAR -->
+    <!-- category -->
     <div class="category-bar">
         <div class="container">
             <div class="scroll" id="categoryScroll">
@@ -2831,7 +2693,7 @@
         </div>
     </div>
 
-    <!-- DELIVERY PROMO -->
+    <!-- promo -->
     <div class="container">
         <div class="promo-strip fade-up">
             <span>🚚 FREE DELIVERY ON ORDERS OVER RS. 2,000</span>
@@ -2839,7 +2701,7 @@
         </div>
     </div>
 
-    <!-- BESTSELLERS -->
+    <!-- bestsellers -->
     <section class="section" id="bestsellers">
         <div class="container">
             <div class="section-header fade-up">
@@ -2850,7 +2712,7 @@
         </div>
     </section>
 
-    <!-- COMBO BANNER -->
+    <!-- combo -->
     <section class="section" id="combos" style="padding-top:0;">
         <div class="container">
             <div class="combo-banner fade-up">
@@ -2876,7 +2738,7 @@
         </div>
     </section>
 
-    <!-- FULL MENU -->
+    <!-- full menu -->
     <section class="section bg-alt" id="fullmenu">
         <div class="container">
             <div class="section-header fade-up">
@@ -2903,7 +2765,7 @@
         </div>
     </section>
 
-    <!-- WHATSAPP ORDERING -->
+    <!-- whatsapp -->
     <section class="whatsapp-section" id="about">
         <div class="container">
             <div class="whatsapp-card fade-up">
@@ -2919,7 +2781,7 @@
         </div>
     </section>
 
-    <!-- ORDER TRACKING -->
+    <!-- tracking -->
     <section class="tracking-section" id="tracking">
         <div class="container">
             <div class="tracking-card fade-up">
@@ -2940,7 +2802,7 @@
         </div>
     </section>
 
-    <!-- WHY CRAVE -->
+    <!-- why crave -->
     <section class="section" id="about">
         <div class="container">
             <div class="section-header text-center fade-up">
@@ -2956,7 +2818,7 @@
         </div>
     </section>
 
-    <!-- SOCIAL PROOF -->
+    <!-- reviews -->
     <section class="section bg-alt">
         <div class="container">
             <div class="section-header text-center fade-up">
@@ -2983,7 +2845,7 @@
         </div>
     </section>
 
-    <!-- GALLERY -->
+    <!-- gallery -->
     <section class="section">
         <div class="container">
             <div class="section-header text-center fade-up">
@@ -3003,7 +2865,7 @@
         </div>
     </section>
 
-    <!-- LOCATIONS -->
+    <!-- locations -->
     <section class="section bg-alt" id="locations">
         <div class="container">
             <div class="section-header text-center fade-up">
@@ -3033,7 +2895,7 @@
         </div>
     </section>
 
-    <!-- NEWSLETTER -->
+    <!-- newsletter -->
     <section class="section">
         <div class="container">
             <div class="newsletter-box fade-up">
@@ -3048,7 +2910,7 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -3088,7 +2950,7 @@
         </div>
     </footer>
 
-    <!-- QUICK VIEW MODAL -->
+    <!-- modals -->
     <div class="modal-overlay" id="quickViewModal">
         <div class="modal-box">
             <span class="close-modal" id="closeModal">&times;</span>
@@ -3110,7 +2972,6 @@
         </div>
     </div>
 
-    <!-- CART SLIDEOUT -->
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-slide" id="cartSlide">
         <div class="cart-header">
@@ -3121,7 +2982,6 @@
         <div class="cart-footer" id="cartFooter"></div>
     </div>
 
-    <!-- CHECKOUT OVERLAY -->
     <div class="checkout-overlay" id="checkoutOverlay">
         <div class="checkout-box">
             <span class="close-checkout" id="closeCheckout">&times;</span>
@@ -3169,7 +3029,6 @@
         </div>
     </div>
 
-    <!-- ORDER CONFIRMATION -->
     <div class="confirm-overlay" id="confirmOverlay">
         <div class="confirm-box">
             <div class="icon">✅</div>
@@ -3186,7 +3045,7 @@
 
     <script>
         // ============================================================
-        // DATA with image URLs
+        // PRODUCTS – each with a unique image URL and emoji fallback
         // ============================================================
         const PRODUCTS = [{
             id: 'p1',
@@ -3196,6 +3055,7 @@
             category: 'burgers',
             rating: 4.8,
             image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍔',
             bestseller: true,
             extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Extra patty', price: 250 },
             { label: 'Jalapeños', price: 80 }],
@@ -3208,6 +3068,7 @@
             category: 'chicken',
             rating: 4.7,
             image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍗',
             bestseller: true,
             extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Jalapeños', price: 80 }],
             sizes: ['Regular', 'Double']
@@ -3219,6 +3080,7 @@
             category: 'fries',
             rating: 4.6,
             image: 'https://images.unsplash.com/photo-1630384060421-cb3d1d8f2c5c?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍟',
             bestseller: true,
             extras: [{ label: 'Cheese', price: 100 }, { label: 'Chicken', price: 180 }],
             sizes: ['Regular', 'Large']
@@ -3230,6 +3092,7 @@
             category: 'burgers',
             rating: 4.9,
             image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍔',
             bestseller: true,
             extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Extra patty', price: 250 },
             { label: 'Jalapeños', price: 80 }],
@@ -3242,6 +3105,7 @@
             category: 'wraps',
             rating: 4.5,
             image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🌯',
             bestseller: false,
             extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Jalapeños', price: 80 }],
             sizes: ['Regular', 'Large']
@@ -3253,6 +3117,7 @@
             category: 'fries',
             rating: 4.3,
             image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍟',
             bestseller: false,
             extras: [{ label: 'Cheese', price: 100 }, { label: 'Chicken', price: 180 }],
             sizes: ['Regular', 'Large']
@@ -3264,6 +3129,7 @@
             category: 'drinks',
             rating: 4.7,
             image: 'https://images.unsplash.com/photo-1546173159-3154f4ce31d3?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🥤',
             bestseller: false,
             extras: [{ label: 'Extra whipped cream', price: 50 }],
             sizes: ['Regular', 'Large']
@@ -3275,6 +3141,7 @@
             category: 'desserts',
             rating: 4.8,
             image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍦',
             bestseller: false,
             extras: [{ label: 'Extra nuts', price: 60 }],
             sizes: ['Regular']
@@ -3285,7 +3152,8 @@
             price: 799,
             category: 'chicken',
             rating: 4.6,
-            image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=400&fit=crop&crop=center&auto=format',
+            image: 'https://images.unsplash.com/photo-1603064752734-4c48eff53d05?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍗',
             bestseller: false,
             extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Jalapeños', price: 80 }],
             sizes: ['Regular', 'Double']
@@ -3297,6 +3165,7 @@
             category: 'combos',
             rating: 4.9,
             image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🔥',
             bestseller: false,
             extras: [{ label: 'Large fries', price: 100 }, { label: 'Large drink', price: 80 }],
             sizes: ['Standard', 'Large']
@@ -3307,7 +3176,8 @@
             price: 449,
             category: 'drinks',
             rating: 4.4,
-            image: 'https://images.unsplash.com/photo-1546173159-3154f4ce31d3?w=400&h=400&fit=crop&crop=center&auto=format',
+            image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🥤',
             bestseller: false,
             extras: [{ label: 'Extra honey', price: 40 }],
             sizes: ['Regular', 'Large']
@@ -3318,7 +3188,8 @@
             price: 649,
             category: 'chicken',
             rating: 4.5,
-            image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=400&fit=crop&crop=center&auto=format',
+            image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍗',
             bestseller: false,
             extras: [{ label: 'Extra sauce', price: 30 }],
             sizes: ['4 pcs', '6 pcs']
@@ -3329,7 +3200,8 @@
             price: 349,
             category: 'fries',
             rating: 4.2,
-            image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400&h=400&fit=crop&crop=center&auto=format',
+            image: 'https://images.unsplash.com/photo-1619531035407-54bf83c15f4c?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🧅',
             bestseller: false,
             extras: [],
             sizes: ['Regular', 'Large']
@@ -3340,7 +3212,8 @@
             price: 749,
             category: 'burgers',
             rating: 4.3,
-            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=400&fit=crop&crop=center&auto=format',
+            image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🥬',
             bestseller: false,
             extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Jalapeños', price: 80 }],
             sizes: ['Regular', 'Double']
@@ -3352,6 +3225,7 @@
             category: 'wraps',
             rating: 4.4,
             image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🧆',
             bestseller: false,
             extras: [{ label: 'Extra hummus', price: 60 }],
             sizes: ['Regular', 'Large']
@@ -3363,6 +3237,7 @@
             category: 'combos',
             rating: 4.8,
             image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🔥',
             bestseller: false,
             extras: [{ label: 'Upgrade to large', price: 200 }],
             sizes: ['Standard']
@@ -3437,8 +3312,6 @@
         // ============================================================
         function formatPrice(n) { return 'Rs. ' + n.toLocaleString(); }
 
-        function generateId() { return 'CRV-' + (2847 + Math.floor(Math.random() * 9000)); }
-
         function getProduct(id) { return PRODUCTS.find(p => p.id === id); }
 
         function getCartTotal() {
@@ -3465,6 +3338,23 @@
         function saveCart() {
             localStorage.setItem('craveCart', JSON.stringify(cart));
             updateCartUI();
+        }
+
+        // ============================================================
+        // FALLBACK for images – replaces broken src with emoji SVG
+        // ============================================================
+        function handleImageError(img, emoji) {
+            if (img.dataset.fallback) return;
+            img.dataset.fallback = 'true';
+            const size = 200;
+            const svg = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <rect width="${size}" height="${size}" fill="#1a1714" rx="12"/>
+                        <text x="50%" y="55%" font-size="80" text-anchor="middle" dominant-baseline="central">${emoji}</text>
+                        <text x="50%" y="85%" font-size="20" fill="#a3a09b" text-anchor="middle" font-family="Inter, sans-serif">CRAVE</text>
+                    </svg>
+                `;
+            img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
         }
 
         // ============================================================
@@ -3521,7 +3411,7 @@
                 const extraLabels = item.extras ? Object.keys(item.extras).join(', ') : '';
                 return `
                             <div class="cart-item">
-                                <div class="ci-img"><img src="${p.image}" alt="${p.name}" loading="lazy" /></div>
+                                <div class="ci-img"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="handleImageError(this, '${p.emoji}')" /></div>
                                 <div class="ci-info">
                                     <div class="ci-name">${p.name}</div>
                                     ${extraLabels ? `<div class="ci-options">${extraLabels}</div>` : ''}
@@ -3605,7 +3495,6 @@
             saveCart();
             const p = getProduct(productId);
             showToast(`${p?.name || 'Item'} added to cart!`, 'fa-check-circle');
-            // Bounce animation on cart count
             cartCount.classList.remove('bounce');
             void cartCount.offsetWidth;
             cartCount.classList.add('bounce');
@@ -3630,7 +3519,7 @@
                 return `
                             <div class="product-card" data-id="${p.id}" data-category="${p.category}" data-name="${p.name.toLowerCase()}">
                                 <div class="img-wrap">
-                                    <img src="${p.image}" alt="${p.name}" loading="lazy" />
+                                    <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="handleImageError(this, '${p.emoji}')" />
                                     <div class="img-shimmer"></div>
                                     ${isBestseller ? '<span class="badge-bestseller">BESTSELLER</span>' : ''}
                                     ${p.bestseller && !showBestseller ? '<span class="badge-bestseller">BESTSELLER</span>' : ''}
@@ -3647,7 +3536,6 @@
                             </div>
                         `;
             }).join('');
-            // Click on card opens quick view (except button)
             container.querySelectorAll('.product-card').forEach(card => {
                 const btn = card.querySelector('.add-btn');
                 const id = card.dataset.id;
@@ -3659,7 +3547,7 @@
         }
 
         // ============================================================
-        // INIT PRODUCTS
+        // INIT
         // ============================================================
         function initBestsellers() {
             const best = PRODUCTS.filter(p => p.bestseller);
@@ -3679,7 +3567,7 @@
         }
 
         // ============================================================
-        // QUICK VIEW MODAL
+        // QUICK VIEW
         // ============================================================
         function quickView(productId) {
             const p = getProduct(productId);
@@ -3691,6 +3579,7 @@
 
             modalImg.src = p.image;
             modalImg.alt = p.name;
+            modalImg.onerror = function() { handleImageError(this, p.emoji); };
             modalTitle.textContent = p.name;
             modalRating.textContent = '★★★★★ ' + p.rating;
             modalDesc.textContent = p.desc;
@@ -3921,7 +3810,7 @@
         });
 
         // ============================================================
-        // WHATSAPP ORDER
+        // WHATSAPP
         // ============================================================
         whatsappBtn.addEventListener('click', () => {
             if (cart.length === 0) {
@@ -4029,7 +3918,7 @@
         });
 
         // ============================================================
-        // SCROLL REVEAL (Intersection Observer)
+        // SCROLL REVEAL
         // ============================================================
         const fadeEls = document.querySelectorAll('.fade-up');
         const observer = new IntersectionObserver((entries) => {
@@ -4046,7 +3935,7 @@
         // ============================================================
         document.addEventListener('click', function(e) {
             const btn = e.target.closest(
-                '.btn-primary, .btn-secondary, .btn-orange-outline, .btn-wa, .checkout-place, .modal-add-btn, .cat-item, .menu-tabs button'
+                '.btn-primary, .btn-secondary, .btn-wa, .checkout-place, .modal-add-btn, .cat-item, .menu-tabs button'
                 );
             if (btn && !btn.classList.contains('cat-item') && !btn.classList.contains('menu-tabs')) {
                 const ripple = document.createElement('span');
@@ -4068,6 +3957,20 @@
         initMenu('all', '');
         updateCartUI();
 
+        // Handle all image errors globally
+        document.addEventListener('error', function(e) {
+            const target = e.target;
+            if (target.tagName === 'IMG' && !target.dataset.fallback) {
+                const product = PRODUCTS.find(p => p.image === target.src);
+                if (product) {
+                    handleImageError(target, product.emoji);
+                } else {
+                    // generic fallback
+                    handleImageError(target, '🍔');
+                }
+            }
+        }, true);
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (qvModal.classList.contains('open')) closeQuickView();
@@ -4079,7 +3982,7 @@
 
         console.log('🍔 CRAVE — Big cravings. Bigger bites.');
         console.log('🛒 Cart:', cart);
-        console.log('📸 All images loaded from Unsplash with fallback emojis.');
+        console.log('📸 Every product now has a unique image + emoji fallback.');
     </script>
 </body>
 </html>
