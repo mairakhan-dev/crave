@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ============================================================
-                   CSS (same as before – compacted for brevity)
+                   CSS (compacted but fully functional)
                    ============================================================ */
         :root {
             --color-bg: #0e0d0b;
@@ -105,6 +105,47 @@
             width: 0%;
             transition: width 0.1s ease;
             box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+        }
+
+        /* back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            z-index: 900;
+            background: var(--color-orange);
+            color: #0e0d0b;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            border: 2px solid var(--color-orange);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            background: var(--color-orange-dark);
+            transform: scale(1.08);
+        }
+        @media (max-width:640px) {
+            .back-to-top {
+                bottom: 80px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
         }
 
         /* buttons */
@@ -497,7 +538,7 @@
             right: -20%;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: heroGlow 8s ease-in-out infinite alternate;
@@ -2609,6 +2650,11 @@
     <!-- scroll progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- toast -->
     <div class="toast-container" id="toastContainer"></div>
 
@@ -3045,7 +3091,7 @@
 
     <script>
         // ============================================================
-        // PRODUCTS – each with a unique image URL and emoji fallback
+        // PRODUCTS – 26 unique items with distinct images
         // ============================================================
         const PRODUCTS = [{
             id: 'p1',
@@ -3241,6 +3287,126 @@
             bestseller: false,
             extras: [{ label: 'Upgrade to large', price: 200 }],
             sizes: ['Standard']
+        }, {
+            id: 'p17',
+            name: 'Truffle Mushroom Burger',
+            desc: 'Premium beef patty, truffle aioli, sautéed mushrooms and Swiss cheese.',
+            price: 1099,
+            category: 'burgers',
+            rating: 4.9,
+            image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍄',
+            bestseller: false,
+            extras: [{ label: 'Extra truffle sauce', price: 150 }, { label: 'Extra cheese', price: 100 }],
+            sizes: ['Regular', 'Double']
+        }, {
+            id: 'p18',
+            name: 'Buffalo Chicken Sandwich',
+            desc: 'Spicy buffalo chicken, blue cheese crumbles, lettuce and ranch dressing.',
+            price: 899,
+            category: 'chicken',
+            rating: 4.6,
+            image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🐔',
+            bestseller: false,
+            extras: [{ label: 'Extra blue cheese', price: 80 }, { label: 'Jalapeños', price: 80 }],
+            sizes: ['Regular', 'Large']
+        }, {
+            id: 'p19',
+            name: 'Ultimate Nachos',
+            desc: 'Tortilla chips, cheese sauce, jalapeños, salsa, sour cream and guacamole.',
+            price: 549,
+            category: 'fries',
+            rating: 4.4,
+            image: 'https://images.unsplash.com/photo-1622652262183-a80e30f2a40b?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🌽',
+            bestseller: false,
+            extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Extra guac', price: 120 }],
+            sizes: ['Regular', 'Large']
+        }, {
+            id: 'p20',
+            name: 'Chocolate Fudge Brownie',
+            desc: 'Warm brownie, rich chocolate fudge, vanilla ice cream and chocolate shavings.',
+            price: 649,
+            category: 'desserts',
+            rating: 4.9,
+            image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍫',
+            bestseller: false,
+            extras: [{ label: 'Extra ice cream', price: 80 }, { label: 'Extra fudge', price: 60 }],
+            sizes: ['Regular']
+        }, {
+            id: 'p21',
+            name: 'Strawberry Lemonade',
+            desc: 'Fresh strawberry lemonade with mint and a hint of lime.',
+            price: 399,
+            category: 'drinks',
+            rating: 4.3,
+            image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍓',
+            bestseller: false,
+            extras: [{ label: 'Extra strawberry', price: 50 }],
+            sizes: ['Regular', 'Large']
+        }, {
+            id: 'p22',
+            name: 'Crispy Fish Burger',
+            desc: 'Breaded fish fillet, tartar sauce, lettuce and pickles on a brioche bun.',
+            price: 949,
+            category: 'burgers',
+            rating: 4.5,
+            image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🐟',
+            bestseller: false,
+            extras: [{ label: 'Extra tartar', price: 60 }, { label: 'Extra cheese', price: 100 }],
+            sizes: ['Regular', 'Double']
+        }, {
+            id: 'p23',
+            name: 'Zinger Stacker',
+            desc: 'Double chicken fillet, pepper jack cheese, spicy sauce and crispy lettuce.',
+            price: 1099,
+            category: 'chicken',
+            rating: 4.7,
+            image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🔥',
+            bestseller: false,
+            extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Jalapeños', price: 80 }],
+            sizes: ['Regular', 'Double']
+        }, {
+            id: 'p24',
+            name: 'Mozzarella Sticks',
+            desc: 'Golden fried mozzarella sticks served with warm marinara sauce.',
+            price: 449,
+            category: 'fries',
+            rating: 4.4,
+            image: 'https://images.unsplash.com/photo-1619531035407-54bf83c15f4c?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🧀',
+            bestseller: false,
+            extras: [{ label: 'Extra marinara', price: 50 }],
+            sizes: ['6 pcs', '10 pcs']
+        }, {
+            id: 'p25',
+            name: 'CRAVE Breakfast Roll',
+            desc: 'Egg, sausage, melted cheese and hash brown wrapped in a warm tortilla.',
+            price: 699,
+            category: 'wraps',
+            rating: 4.6,
+            image: 'https://images.unsplash.com/photo-1633575239281-0a7e8e1f23f6?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🍳',
+            bestseller: false,
+            extras: [{ label: 'Extra sausage', price: 120 }, { label: 'Extra cheese', price: 80 }],
+            sizes: ['Regular', 'Large']
+        }, {
+            id: 'p26',
+            name: 'Loaded Potato Wedges',
+            desc: 'Crispy potato wedges, sour cream, melted cheese, bacon bits and chives.',
+            price: 629,
+            category: 'fries',
+            rating: 4.7,
+            image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400&h=400&fit=crop&crop=center&auto=format',
+            emoji: '🥔',
+            bestseller: false,
+            extras: [{ label: 'Extra cheese', price: 100 }, { label: 'Extra bacon', price: 120 }],
+            sizes: ['Regular', 'Large']
         }];
 
         // ============================================================
@@ -3269,6 +3435,7 @@
         const hamburger = $('#hamburger');
         const mobileNav = $('#mobileNav');
         const mobileCartLink = $('#mobileCartLink');
+        const backToTop = $('#backToTop');
 
         const bestsellerGrid = $('#bestsellerGrid');
         const menuGrid = $('#menuGrid');
@@ -3340,20 +3507,17 @@
             updateCartUI();
         }
 
-        // ============================================================
-        // FALLBACK for images – replaces broken src with emoji SVG
-        // ============================================================
         function handleImageError(img, emoji) {
             if (img.dataset.fallback) return;
             img.dataset.fallback = 'true';
             const size = 200;
             const svg = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-                        <rect width="${size}" height="${size}" fill="#1a1714" rx="12"/>
-                        <text x="50%" y="55%" font-size="80" text-anchor="middle" dominant-baseline="central">${emoji}</text>
-                        <text x="50%" y="85%" font-size="20" fill="#a3a09b" text-anchor="middle" font-family="Inter, sans-serif">CRAVE</text>
-                    </svg>
-                `;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                            <rect width="${size}" height="${size}" fill="#1a1714" rx="12"/>
+                            <text x="50%" y="55%" font-size="80" text-anchor="middle" dominant-baseline="central">${emoji}</text>
+                            <text x="50%" y="85%" font-size="20" fill="#a3a09b" text-anchor="middle" font-family="Inter, sans-serif">CRAVE</text>
+                        </svg>
+                    `;
             img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
         }
 
@@ -3889,6 +4053,20 @@
         });
 
         // ============================================================
+        // BACK TO TOP
+        // ============================================================
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ============================================================
         // SCROLL PROGRESS
         // ============================================================
         window.addEventListener('scroll', () => {
@@ -3957,7 +4135,7 @@
         initMenu('all', '');
         updateCartUI();
 
-        // Handle all image errors globally
+        // Global image error fallback
         document.addEventListener('error', function(e) {
             const target = e.target;
             if (target.tagName === 'IMG' && !target.dataset.fallback) {
@@ -3965,7 +4143,6 @@
                 if (product) {
                     handleImageError(target, product.emoji);
                 } else {
-                    // generic fallback
                     handleImageError(target, '🍔');
                 }
             }
@@ -3982,7 +4159,7 @@
 
         console.log('🍔 CRAVE — Big cravings. Bigger bites.');
         console.log('🛒 Cart:', cart);
-        console.log('📸 Every product now has a unique image + emoji fallback.');
+        console.log('📸 26 unique items loaded with fallback support.');
     </script>
 </body>
 </html>
